@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from Consumer import views
+from Consumer.views import Consumerview
 
 urlpatterns = [
-    path("",views.show ),
+    path("",  Consumerview.as_view()),
 
 
 ]

@@ -2,14 +2,16 @@ from django.shortcuts import render,HttpResponse
 from .forms import MerchantForm
 from Voucher.models import Voucher
 from Consumer.models import Consumer
+from django.views.generic import TemplateView
 
-def redeem(request):
-    if request.method == "GET":
+class Merchantview(TemplateView):
+
+    def get(self,request):
         form = MerchantForm()
         return render(request, 'Merchant/Merchantredeem.html', {'form': form})
 
-    if request.method == "POST":
-        try:
+    def post(self, request):
+
             form = MerchantForm(request.POST)
             if form.is_valid():
                 cod=form.cleaned_data['code']
@@ -24,6 +26,6 @@ def redeem(request):
                           }
                              )
                 return HttpResponse(n)
-        except:
-            return render(request, 'Merchant/stata.html', {'form': form})
+            else:
+                return render(request, 'Merchant/stata.html', {'form': form})
 
